@@ -3,11 +3,29 @@ import re
 from telnetlib import Telnet
 from typing import List, Union, Pattern, Match
 
+import aiohttp
+
 _LOGGER = logging.getLogger(__name__)
 
 
 class ConnectionException(Exception):
     pass
+
+
+class AuthenticationException(ConnectionException):
+    """Authentication issues"""
+
+
+class InvalidCommandException(ConnectionException):
+    """Invalid command executed"""
+
+
+class InvalidDataException(ConnectionException, ValueError):
+    """Invalid response data after command execution"""
+
+
+class DataNotFoundException(ConnectionException):
+    """Data or command not found"""
 
 
 class Connection(object):
